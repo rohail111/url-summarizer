@@ -77,12 +77,45 @@ python main.py https://example.com --json
 | `API_KEY` | _(unset)_ | If set, requires `X-API-Key` header |
 | `LOG_LEVEL` | `INFO` | Logging level |
 
-## Docker
+## Deploy (share a public link)
+
+### Why not GitHub Pages / Firebase Hosting / Vercel?
+
+Those hosts are for **static websites** (HTML/CSS/JS).
+
+This UI is **Streamlit** — a live Python app that:
+- fetches URLs
+- calls Groq via LangChain
+
+It needs a **Python server**, so static hosting cannot run it.
+
+### Free option that works: Streamlit Community Cloud
+
+1. Go to [share.streamlit.io](https://share.streamlit.io)
+2. Sign in with GitHub
+3. Deploy repo `rohail111/url-summarizer`
+4. Main file: `app.py`
+5. Add secrets (App settings → Secrets):
+
+```toml
+GROQ_API_KEY = "gsk_your_real_key"
+GROQ_MODEL = "openai/gpt-oss-20b"
+```
+
+6. Share the generated `*.streamlit.app` URL with colleagues
+
+### Docker / API hosts
 
 ```bash
 export GROQ_API_KEY=gsk_your_key_here
 docker compose up --build
 ```
+
+For the FastAPI API on Render/Railway, set `GROQ_API_KEY` and start with:
+
+`uvicorn url_summarizer.api.app:app --host 0.0.0.0 --port $PORT`
+
+Free API tiers usually sleep when idle (not truly 24/7).
 
 ## Tests
 

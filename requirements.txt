@@ -1,0 +1,10 @@
+langchain-groq
+langchain-text-splitters
+beautifulsoup4
+requests
+python-dotenv
+streamlit
+fastapi
+uvicorn[standard]
+pydantic-settings
+tenacity

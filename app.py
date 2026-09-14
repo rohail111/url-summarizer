@@ -1,8 +1,27 @@
+import os
+
 import streamlit as st
 
+
+def _load_secrets_into_env() -> None:
+    """Map Streamlit Cloud secrets to env vars used by Settings."""
+    try:
+        secrets = st.secrets
+    except Exception:
+        return
+    for key in ("GROQ_API_KEY", "GROQ_MODEL"):
+        if key in secrets:
+            os.environ[key] = str(secrets[key])
+
+
+_load_secrets_into_env()
+
+from url_summarizer.config import get_settings
 from url_summarizer.exceptions import FetchError, InvalidUrlError, SummarizationError
 from url_summarizer.fetch import fetch_url_text
 from url_summarizer.summarizer import format_summary_markdown, summarize_text
+
+get_settings.cache_clear()
 
 st.set_page_config(page_title="URL Summarizer", page_icon="🔗", layout="centered")
 st.title("URL Summarizer")
