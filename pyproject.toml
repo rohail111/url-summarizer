@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "url-summarizer"
+version = "1.0.0"
+description = "Production-ready LangChain URL summarizer"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "langchain-groq",
+    "langchain-text-splitters",
+    "beautifulsoup4",
+    "requests",
+    "python-dotenv",
+    "streamlit",
+    "fastapi",
+    "uvicorn[standard]",
+    "pydantic-settings",
+    "tenacity",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "httpx"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["url_summarizer*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
